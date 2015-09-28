@@ -1,0 +1,48 @@
+<ion-view view-title="設置">
+  <ion-content>
+    <ion-list>
+      <!--<ion-toggle ng-model="settings.notification">
+        推送通知
+      </ion-toggle>-->
+
+      <div style="padding:15px 0 8px 10px;color:#444">課程表</div>
+      <label class="item item-input item-select">
+        <div class="input-label">
+          年級
+        </div>
+        <select ng-model="selectgrade" ng-change="updateGrade(selectgrade)">
+          <option value="0" label="未選擇" ng-selected="{{grade}} == 0">未選擇</option>
+          <option value="1" label="中一" ng-selected="{{grade}} == 1">中一</option>
+          <option value="2" label="中二" ng-selected="{{grade}} == 2">中二</option>
+          <option value="3" label="中三" ng-selected="{{grade}} == 3">中三</option>
+          <option value="4" label="中四" ng-selected="{{grade}} == 4">中四</option>
+          <option value="5" label="中五" ng-selected="{{grade}} == 5">中五</option>
+          <option value="6" label="中六" ng-selected="{{grade}} == 6">中六</option>
+        </select>
+      </label>
+
+      <label class="item item-input item-select">
+        <div class="input-label">
+          班級
+        </div>
+        <select ng-model="selectclass" ng-change="updateClass(selectclass)">
+          <option value="N" ng-selected=" '{{class}}' == 'N' ">未選擇</option>
+          <option value="A" ng-selected=" '{{class}}' == 'A' ">A</option>
+          <option value="B" ng-selected=" '{{class}}' == 'B' ">B</option>
+          <option value="C" ng-selected=" '{{class}}' == 'C' ">C</option>
+          <option value="D" ng-selected=" '{{class}}' == 'D' ">D</option>
+        </select>
+      </label>
+      <div style="padding:15px 0 8px 10px;color:#444">版本</div>
+      <label class="item">
+        2.0.2
+      </label>
+            <div style="padding:15px 0 8px 10px;color:#444">聯繫作者</div>
+      <label class="item">
+        郵件：tswymt@gmail.com
+      </label>
+
+    </ion-list>
+    <div style="width:80px;margin:0 auto;margin-top:30px;"><img src="img/splendid-s.png" style="width:100px;" /></div>
+  </ion-content>
+</ion-view>

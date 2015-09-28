@@ -1,0 +1,76 @@
+<ion-view view-title="課表">
+
+  <ion-content>
+    <div class="list card" style="border-color:#26A69A">
+      <div class="item item-divider">課表<i class="title-icon icon ion-ios-calendar-outline" style="color:#26A69A"></i></div>
+      <div class="item item-body" style="padding:0 0 0 0;">
+        <div>
+          <div class="setting-instruction" ng-show="displayinstruction">請先去設置里設置班級</div>
+          <ion-radio ng-repeat="item in dayselect" ng-value="item.value" ng-model="data.dayselect" ng-click="getSchedule(data.dayselect)" ng-show="!displayinstruction">
+            {{ item.text }}
+          </ion-radio>
+
+          <div class="row" style="text-align:center;width:200px;margin:10px auto;margin-top:20px;">
+            <div class="col" style="border:1px solid #26A69A">班級</div>
+            <div class="col" style="font-weight:200;background-color:#26A69A;color:#fff">{{grade}}{{class}}</div>
+          </div>
+          <table style="width:100%;text-align:center">
+            <tr>
+              <th colspan="2">早會</th>
+            </tr>
+            <tr>
+              <td>8:30-9:10</td>
+              <td>{{todayScheduleData.one}}</td>
+            </tr>
+            <tr>
+              <td>9:10-9:50</td>
+              <td>{{todayScheduleData.two}}</td>
+            </tr>
+            <tr>
+              <th colspan="2">小息</th>
+            </tr>
+            <tr>
+              <td>10:05-10:45</td>
+              <td>{{todayScheduleData.three}}</td>
+            </tr>
+            <tr>
+              <td>10:45-11:25</td>
+              <td>{{todayScheduleData.four}}</td>
+            </tr>
+            <tr>
+              <th colspan="2">小息</th>
+            </tr>
+            <tr>
+              <td>11:40-12:20</td>
+              <td>{{todayScheduleData.five}}</td>
+            </tr>
+            <tr>
+              <td>12:20-13:00</td>
+              <td>{{todayScheduleData.six}}</td>
+            </tr>
+            <tr>
+              <th colspan="2">午膳</th>
+            </tr>
+            <tr>
+              <td>14:00-14:40</td>
+              <td>{{todayScheduleData.seven}}</td>
+            </tr>
+            <tr>
+              <td>14:40-15:20</td>
+              <td>{{todayScheduleData.eight}}</td>
+            </tr>
+            <tr>
+              <td>15:20-16:00</td>
+              <td>{{todayScheduleData.nine}}</td>
+            </tr>
+            <tr>
+              <th colspan="2">放學</th>
+            </tr>
+
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
