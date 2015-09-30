@@ -3235,7 +3235,9 @@ a.subdued {
 .platform-android .nav-bar-has-subheader .bar {
   background-image: none; }
 .platform-android .bar .back-button .icon:before {
-  font-size: 24px; }
+  font-size: 24px; 
+  color:#fff;
+  margin-left:15px;}
 .platform-android .bar .title {
   font-size: 19px;
   line-height: 50px;
@@ -6285,6 +6287,21 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
   .item-radio input:checked ~ .radio-icon {
     /* show the checkmark icon when its checked */
     visibility: visible; }
+    
+     .item-radio input:checked + .radio-content .item-content {
+    /* style the item content when its checked */
+	padding:3px 0;
+	border-radius: 0px;
+	background: transparent;
+	border-bottom:2px solid #26A69A;
+    
+  }
+    
+  .item-radio input:checked + .radio-content .radio-icon {
+    /* show the checkmark icon when its checked */
+    visibility: visible;
+    
+  }
 
 .platform-android.grade-b .item-radio, .platform-android.grade-c .item-radio {
   -webkit-animation: androidCheckedbugfix infinite 1s; }

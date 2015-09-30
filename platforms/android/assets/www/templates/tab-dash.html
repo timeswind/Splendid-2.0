@@ -1,21 +1,8 @@
 <ion-view view-title="{{today}}">
-  <script id="templates/facts.html" type="text/ng-template">
-    <ion-view view-title="Facts">
-      <ion-content class="padding">
-        <p>Banging your head against a wall uses 150 calories an hour.</p>
-        <p>Dogs have four toes on their hind feet, and five on their front feet.</p>
-        <p>The ant can lift 50 times its own weight, can pull 30 times its own weight and always falls over on its right side
-          when intoxicated.</p>
-        <p>A cockroach will live nine days without it's head, before it starves to death.</p>
-        <p>Polar bears are left handed.</p>
-        <p>
-          <a class="button icon ion-home" href="#/tab/home"> Home</a>
-          <a class="button icon icon-right ion-chevron-right" href="#/tab/facts2">More Facts</a>
-        </p>
-      </ion-content>
-    </ion-view>
-  </script>
   <ion-content>
+    <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()">
+    </ion-refresher>
+
     <div class="list card" ng-show="schooldayboolean" style="border-color:#EF5350;">
       <div class="item item-divider">上課日<i class="title-icon icon ion-ios-book-outline" style="color:#EF5350"></i></div>
       <div class="item item-body">
@@ -42,9 +29,9 @@
         </br>
         <b style="color:#FF7043">{{activity}}</b>
         <p ng-show="schoolactivityfortomorrowboolean">
-          明日活動/事項：
+          明日活動/事項：<b style="color:#FF8A65">{{activityfortomorrow}}</b>
         </p>
-        <b style="color:#FF8A65">{{activityfortomorrow}}</b>
+
       </div>
     </div>
 
@@ -56,11 +43,11 @@
         </div>
       </div>
     </div>
-    <div class="list card" ng-show="schooldayboolean && class != 'N' && grade != 0" style="border-color:#26A69A">
+    <div class="list card" ng-show="schooldayboolean" style="border-color:#26A69A">
       <div class="item item-divider">今日課表<i class="title-icon icon ion-ios-calendar-outline" style="color:#26A69A"></i></div>
       <div class="item item-body" style="padding:0 0 0 0;">
         <div>
-          <div class="setting-instruction" ng-show="displayinstruction">請先去設置里設置班級</div>
+          <a href="#/tab/account"><div class="setting-instruction" ng-show="displayinstruction">請先去設置里設置班級</div></a>
           <div class="row" style="text-align:center;width:200px;margin:10px auto;">
             <div class="col" style="border:1px solid #26A69A">班級</div>
             <div class="col" style="font-weight:200;background-color:#26A69A;color:#fff">{{grade}}{{class}}</div>
@@ -119,7 +106,9 @@
             </tr>
 
           </table>
-          <div class="gotoschedule-button"><a href="#/tab/dash/fullscheduleview">查看所有課表&nbsp;</a><i class="icon ion-arrow-right-c"></i></div>
+          <a href="#/tab/dash/fullscheduleview">
+            <div class="gotoschedule-button">查看所有課表&nbsp;</div>
+          </a>
 
         </div>
       </div>
@@ -140,7 +129,9 @@
         <p ng-show="schooldayfortomorrowboolean" style="padding:5px;margin-top:5px;">
           明天是上課日：<b>{{schooldayfortomorrow}}</b>
         </p>
-        <a href="#/tab/dash/fullscheduleview"><div class="gotoschedule-button-blue">查看所有課表&nbsp;<i class="icon ion-arrow-right-c"></i></div></a>
+        <a href="#/tab/dash/fullscheduleview">
+          <div class="gotoschedule-button-blue">查看所有課表&nbsp;<i class="icon ion-arrow-right-c"></i></div>
+        </a>
       </div>
     </div>
 
@@ -149,7 +140,7 @@
     <div class="list card" style="border-color:#5C6BC0">
       <div class="item item-divider">今日天氣<i class="title-icon icon ion-ios-cloud-outline" style="color:#5C6BC0"></i></div>
       <div class="item item-body" style="padding-bottom:30px;text-align:center;">
-        <div style="color:#5C6BC0;font-size:18px;background-color:#5C6BC0;color:#fff;padding:10px;">
+        <div style="color:#5C6BC0;font-size:18px;background-color:#5C6BC0;color:#fff;padding:10px 15px;">
           {{weatherdescription}}
         </div>
         <p>
