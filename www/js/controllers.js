@@ -1,8 +1,7 @@
 /* global angular */
 angular.module('starter.controllers', [])
 
-  .controller('DashCtrl', function ($scope, $filter, $http, $state, WeatherData, GetSchedule) {
-
+  .controller('DashCtrl', function ($scope, $filter, $http, $state, WeatherData, GetSchedule, TodayData) {
     var weekdayarray = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"];
     var weekdayinthreedays = [];
     var montharray = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
@@ -25,8 +24,10 @@ angular.module('starter.controllers', [])
 
     $scope.displayinstruction = false;
 
+    //进入View
     $scope.$on('$ionicView.enter', function () {
       var today = new Date();
+      weekdayinthreedays = [];
       var weekday = weekdayarray[today.getDay()];
       var month = montharray[today.getMonth()];
       
@@ -37,10 +38,12 @@ angular.module('starter.controllers', [])
       $scope.today = weekday + " " + month + today.getDate() + "日"
 
       //未来两天
-      for (var i = 0; i < 3; i++) {
-        weekdayinthreedays.push(weekdayarray[today.getDay() + i]);
-      }
+
+      weekdayinthreedays.push(weekday);
+      weekdayinthreedays.push(weekdayarray[today.getDay() + 1]);
+
       $scope.weekdayinthreedays = weekdayinthreedays
+
       
       //天气
       WeatherData.all().then(function (data) {
@@ -59,16 +62,12 @@ angular.module('starter.controllers', [])
 
 
     });
-
-    $scope.doRefresh = function () { 
+    //下拉刷新
+    $scope.doRefresh = function () {
       $scope.$broadcast('$ionicView.enter');
     }
 
-
-
-
-
-
+    //检查课程表设置
     function checkScheduleSettings() {
       if (window.localStorage['grade']) {
         thegrade = window.localStorage['grade'];
@@ -90,7 +89,7 @@ angular.module('starter.controllers', [])
       }
     }
 
-
+    //當在設置里改變了課程表后
     $scope.$on('changeSchedule', function (e, msg) {
 
       if (window.localStorage['grade']) {
@@ -113,8 +112,9 @@ angular.module('starter.controllers', [])
       }
 
     });
-
+    //獲取活動，假期以及課程表
     function setCalender() {
+
       var today = new Date();
       var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
       var daytest = $filter('date')(today, 'dd/MM/yyyy');
@@ -123,6 +123,8 @@ angular.module('starter.controllers', [])
       $http.get('calender.json').then(function (data) {
 
         schoolday = eval(data.data[daytest])["day"];
+        TodayData.update(schoolday);
+
         schooldayfortomorrow = eval(data.data[tomorrowtest])["day"];
 
         holiday = eval(data.data[daytest])["holiday"];
@@ -134,9 +136,13 @@ angular.module('starter.controllers', [])
         if (schoolday !== "") {
           $scope.schooldayboolean = true;
           $scope.schoolday = "Day" + " " + schoolday;
+          $scope.$apply();
           getSchedule(schoolday);
         } else if (holiday !== "") {
+          $scope.schooldayboolean = false;
           $scope.holiday = holiday;
+        } else {
+          $scope.schooldayboolean = false;
         }
 
         if (activity !== "") {
@@ -150,10 +156,12 @@ angular.module('starter.controllers', [])
           $scope.schooldayfortomorrowboolean = true;
           $scope.schooldayfortomorrow = "Day" + " " + schooldayfortomorrow;
         } else if (holidayfortomorrow !== "") {
+          $scope.schooldayfortomorrowboolean = false;
           $scope.holidayfortomorrow = holidayfortomorrow;
           $scope.schooldayfortomorrow = "假期"
         } else {
-          $scope.schooldayfortomorrow = "無"
+          $scope.schooldayfortomorrowboolean = false;
+          $scope.schooldayfortomorrow = "空"
         }
 
         if (activityfortomorrow !== "") {
@@ -165,9 +173,9 @@ angular.module('starter.controllers', [])
 
       });
     }
-
+    //根據日子獲取課程表
     function getSchedule(day) {
-      if ($scope.grade != 0 && $scope.class != 'N') {
+      if ($scope.grade && $scope.class) {
         GetSchedule.all().then(function (data) {
           $scope.todayScheduleData = data.data[thegrade + theclass][0][day];
         });
@@ -181,69 +189,70 @@ angular.module('starter.controllers', [])
   })
 
 
-  .controller('AccountCtrl', function ($scope) {
-    if (window.localStorage['grade']) {
-      $scope.grade = window.localStorage['grade'];
-    } else {
-      $scope.grade = 0;
-    }
-
-    if (window.localStorage['class']) {
-      $scope.class = window.localStorage['class'];
-    } else {
-      $scope.class = "N";
-    }
-
-    $scope.settings = {
-      notification: true
+  .controller('AccountCtrl', function ($scope, $rootScope) {
+    $scope.data = {
+      classSelect: window.localStorage['class'],
+      gradeSelect: window.localStorage['grade'],
+      classOptions: [
+        { id: 'A' },
+        { id: 'B' },
+        { id: 'C' },
+        { id: 'D' },
+      ],
+      gradeOptions: [
+        { id: '1', name: '中一' },
+        { id: '2', name: '中二' },
+        { id: '3', name: '中三' },
+        { id: '4', name: '中四' },
+        { id: '5', name: '中五' },
+        { id: '6', name: '中六' }
+      ]
     };
 
     $scope.updateGrade = function (selectgrade) {
       window.localStorage.setItem('grade', selectgrade);
-      $scope.grade = window.localStorage['grade'];
-      console.log($scope.grade)
-
+      $rootScope.$broadcast('changeSchedule', 'hi');
     }
 
     $scope.updateClass = function (selectclass) {
       window.localStorage.setItem('class', selectclass);
-      $scope.class = window.localStorage['class'];
-      console.log($scope.class)
-
-    }
-  })
-
-  .controller('TabCtrl', function ($scope, $rootScope) {
-    $scope.onTabSelected = function () {
       $rootScope.$broadcast('changeSchedule', 'hi');
-
     }
   })
-  .controller('FullScheduleCtrl', function ($scope, $rootScope, GetSchedule) {
+
+  .controller('FullScheduleCtrl', function ($scope, $rootScope, GetSchedule, TodayData) {
     var thegrade;
     var theclass;
+    var schoolday = TodayData.getSchoolday();
+    var chineseGrade = ["零", "一", "二", "三", "四", "五", "六"]
+
+    $scope.schoolday = schoolday;
+
+    GetSchedule.all().then(function (data) {
+      $scope.todayScheduleData = data.data[thegrade + theclass][0][schoolday];
+    });
+
     $scope.displayinstruction = false;
+
+    $scope.data = {
+      dayselect: schoolday
+    }
+
     $scope.dayselect = [
-      { text: "A", value: "A" },
-      { text: "B", value: "B" },
-      { text: "C", value: "C" },
-      { text: "D", value: "D" },
-      { text: "E", value: "E" },
-      { text: "F", value: "F" }
+      { value: "A" },
+      { value: "B" },
+      { value: "C" },
+      { value: "D" },
+      { value: "E" },
+      { value: "F" }
     ];
 
     if (window.localStorage['grade']) {
       thegrade = window.localStorage['grade'];
-      $scope.grade = thegrade;
-      if (thegrade == "0") {
-        $scope.displayinstruction = true;
-      }
+      $scope.grade = chineseGrade[thegrade];
       if (window.localStorage['class']) {
         theclass = window.localStorage['class'];
         $scope.class = theclass;
-        if (theclass == "N") {
-          $scope.displayinstruction = true;
-        }
       } else {
         theclass = null;
         $scope.displayinstruction = true;
@@ -254,10 +263,120 @@ angular.module('starter.controllers', [])
     }
 
     $scope.getSchedule = function (day) {
+      getSchedule(day)
+    }
+
+    $scope.$on('changeSchedule', function (e, msg) {
+
+      if (window.localStorage['grade']) {
+        thegrade = window.localStorage['grade'];
+        $scope.grade = thegrade;
+        $scope.grade = chineseGrade[thegrade];
+        if (window.localStorage['class']) {
+          theclass = window.localStorage['class'];
+          $scope.class = theclass;
+          if ($scope.schooldayboolean) {
+            $scope.displayinstruction = false;
+          }
+        } else {
+          theclass = null;
+          $scope.displayinstruction = true;
+        }
+      } else {
+        thegrade = null;
+        $scope.displayinstruction = true;
+      }
+
+    });
+
+    function getSchedule(day) {
       GetSchedule.all().then(function (data) {
         $scope.todayScheduleData = data.data[thegrade + theclass][0][day];
       });
     }
 
+  })
+
+  .controller('CalendarCtrl', function ($scope, $http, $filter) {
+
+    var holidayArray = [];
+    var activityArray = [];
+
+    var start = new Date();
+    var end = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
+
+    $http.get('calender.json').then(function (data) {
+
+      while (start < end) {
+        var holidayName = eval(data.data[$filter('date')(start, 'dd/MM/yyyy')])["holiday"];
+        var activityName = eval(data.data[$filter('date')(start, 'dd/MM/yyyy')])["activity"];
+        var dateFormate = $filter('date')(start, 'MM月dd日')
+        if (holidayName) {
+          holidayArray.push({ date: dateFormate, name: holidayName });
+
+        }
+
+        if (activityName) {
+          activityArray.push({ date: dateFormate, name: activityName });
+
+        }
+        var newDate = start.setDate(start.getDate() + 1);
+        start = new Date(newDate);
+      }
+
+      $scope.holiday = holidayArray
+      $scope.activity = activityArray
+
+    });
+  })
+
+  .controller('AllHolidayCtrl', function ($scope, $http, $filter) {
+
+    var holidayArray = [];
+
+    var start = new Date();
+    var end = new Date("07/31/2016");
+
+    $http.get('calender.json').then(function (data) {
+
+      while (start < end) {
+        var holidayName = eval(data.data[$filter('date')(start, 'dd/MM/yyyy')])["holiday"];
+        var dateFormate = $filter('date')(start, 'MM月dd日')
+        if (holidayName) {
+          holidayArray.push({ date: dateFormate, name: holidayName });
+
+        }
+        var newDate = start.setDate(start.getDate() + 1);
+        start = new Date(newDate);
+      }
+
+      $scope.holiday = holidayArray
+
+    });
+  })
+  
+    .controller('AllActivityCtrl', function ($scope, $http, $filter) {
+
+    var activityArray = [];
+
+    var start = new Date();
+    var end = new Date("07/31/2016");
+
+    $http.get('calender.json').then(function (data) {
+
+      while (start < end) {
+        var activityName = eval(data.data[$filter('date')(start, 'dd/MM/yyyy')])["activity"];
+        var dateFormate = $filter('date')(start, 'MM月dd日')
+        if (activityName) {
+          activityArray.push({ date: dateFormate, name: activityName });
+
+        }
+        var newDate = start.setDate(start.getDate() + 1);
+        start = new Date(newDate);
+      }
+
+      $scope.holiday = activityArray
+
+    });
   });
   

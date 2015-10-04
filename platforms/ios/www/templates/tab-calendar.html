@@ -1,0 +1,16 @@
+<ion-view view-title="校曆">
+  <ion-content>
+    <ion-list>
+      <div style="padding:15px 0 8px 10px;color:#444">30日內假期</div>
+      <ion-item ng-repeat="holiday in holiday">
+        <span class="calendar-date">{{holiday.date}}</span>
+        <span class="calendar-name">{{holiday.name}}</span>
+      </ion-item>
+      <div style="padding:15px 0 8px 10px;color:#444">30日內活動及事項</div>
+      <ion-item ng-repeat="activity in activity">
+        <span class="calendar-date">{{activity.date}}</span>
+        <span class="calendar-name">{{activity.name}}</span>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

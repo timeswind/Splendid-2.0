@@ -57665,7 +57665,7 @@ IonicModule
     require: '?ngModel',
     transclude: true,
     template:
-      '<label class="item item-radio">' +
+      '<label class="item-radio">' +
         '<input type="radio" name="radio-group">' +
         '<div class="radio-content">' +
           '<div class="item-content disable-pointer-events" ng-transclude></div>' +

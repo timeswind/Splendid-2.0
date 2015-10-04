@@ -1,0 +1,12 @@
+<ion-view view-title="所有假期">
+
+  <ion-content>
+       <ion-item style="background:transparent;text-align:center">
+        <a style="color:#333;font-size:18px;border-bottom:1px solid #333;">這個學年還剩{{holiday.length}}天假期</a>
+      </ion-item>
+      <ion-item ng-repeat="holiday in holiday">
+        <span class="calendar-date">{{holiday.date}}</span>
+        <span class="calendar-name">{{holiday.name}}</span>
+      </ion-item>
+  </ion-content>
+</ion-view>

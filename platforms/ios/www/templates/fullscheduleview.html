@@ -5,10 +5,13 @@
       <div class="item item-divider">課表<i class="title-icon icon ion-ios-calendar-outline" style="color:#26A69A"></i></div>
       <div class="item item-body" style="padding:0 0 0 0;">
         <div>
-          <div class="setting-instruction" ng-show="displayinstruction">請先去設置里設置班級</div>
-          
-          <ion-radio-fix ng-repeat="item in dayselect" ng-value="item.value" ng-model="data.dayselect" ng-click="getSchedule(data.dayselect)" ng-show="!displayinstruction">
-            {{ item.text }}
+          <!--<p> 今天是：Day {{schoolday}}</p>-->
+          <a href="#/tab/account">
+            <div class="setting-instruction" ng-show="displayinstruction">請先去設置里設置班級</div>
+          </a>
+          <ion-radio-fix ng-repeat="item in dayselect" ng-value="item.value" ng-model="data.dayselect" ng-click="getSchedule(item.value)"
+          ng-show="!displayinstruction">
+            {{ item.value }}
           </ion-radio-fix>
 
           <div class="row" style="text-align:center;width:200px;margin:10px auto;margin-top:20px;">

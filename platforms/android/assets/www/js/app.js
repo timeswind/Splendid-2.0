@@ -1,3 +1,5 @@
+/* global StatusBar */
+/* global cordova */
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -40,7 +42,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ionic.service.push', 
         url: '/tab',
         abstract: true,
         templateUrl: 'templates/tabs.html',
-        controller: 'TabCtrl'
       })
 
     // Each tab has its own nav history stack:
@@ -54,6 +55,16 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ionic.service.push', 
           }
         }
       })
+      .state('tab.fullscheduleview', {
+        url: '/dash/fullscheduleview',
+        views: {
+          'tab-dash': {
+            templateUrl: 'templates/fullscheduleview.html',
+            controller: 'FullScheduleCtrl'
+          }
+        }
+
+      })
 
       .state('tab.account', {
         url: '/account',
@@ -64,29 +75,45 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ionic.service.push', 
           }
         }
       })
-
-      .state('tab.fullscheduleview', {
-        url: '/dash/fullscheduleview',
+      .state('tab.calendar', {
+        url: '/calendar',
         views: {
-          'tab-dash': {
-            templateUrl: 'templates/fullscheduleview.html',
-            controller: 'FullScheduleCtrl'
+          'tab-calendar': {
+            templateUrl: 'templates/tab-calendar.html',
+            controller: 'CalendarCtrl'
           }
         }
-        // templateUrl: 'templates/fullscheduleview.html',
-        // controller: 'FullScheduleCtrl'
+      })
 
+      .state('tab.allholidayview', {
+        url: '/calendar/allholidayview',
+        views: {
+          'tab-calendar': {
+            templateUrl: 'templates/allholidayview.html',
+            controller: 'AllHolidayCtrl'
+          }
+        }
+      })
+      .state('tab.allactivityview', {
+        url: '/calendar/allactivityview',
+        views: {
+          'tab-calendar': {
+            templateUrl: 'templates/allactivityview.html',
+            controller: 'AllActivityCtrl'
+          }
+        }
       });
+
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/dash');
 
   });
-  
-  angular.module('ngIOS9UIWebViewPatch', ['ng']).config(['$provide', function($provide) {
+
+angular.module('ngIOS9UIWebViewPatch', ['ng']).config(['$provide', function ($provide) {
   'use strict';
 
-  $provide.decorator('$browser', ['$delegate', '$window', function($delegate, $window) {
+  $provide.decorator('$browser', ['$delegate', '$window', function ($delegate, $window) {
 
     if (isIOS9UIWebView($window.navigator.userAgent)) {
       return applyIOS9Shim($delegate);
@@ -100,9 +127,9 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ionic.service.push', 
 
     function applyIOS9Shim(browser) {
       var pendingLocationUrl = null;
-      var originalUrlFn= browser.url;
+      var originalUrlFn = browser.url;
 
-      browser.url = function() {
+      browser.url = function () {
         if (arguments.length) {
           pendingLocationUrl = arguments[0];
           return originalUrlFn.apply(browser, arguments);

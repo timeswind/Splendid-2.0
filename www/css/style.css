@@ -18,10 +18,10 @@ font-size: 14px;
 	font-size: 26px;
 }
 .gotoschedule-button{
-	padding:10px 15px;text-align:center;font-size:18px;color:#fff;background-color:#26A69A
+	padding:10px 15px;text-align:center;font-size:18px;color:#26A69A;
 }
 .gotoschedule-button-blue{
-	margin:10px 5px;padding:5px;text-align:center;font-size:18px;color:#fff;background-color:#42A5F5
+	margin:15px 0 0 0 ;padding:10px;text-align:center;font-size:18px;color:#42A5F5;
 }
 a{
 	text-decoration: none;
@@ -38,7 +38,7 @@ a{
 	text-align: center
 }
 .item-radio .item-content{
-padding: 10px 0;	
+padding: 8px 0;	
 }
 .item-radio.radio-icon{
 display: none;
@@ -49,8 +49,20 @@ display: none;
 }
 
 .item-radio input:checked ~ .item-content{
-	padding:3px 0;
+
 	border-radius: 0px;
-	background: transparent;
-	border-bottom:2px solid #26A69A;
+	color: #fff;
+	background: #26A69A;
+	
+}
+
+.calendar-date{
+	float: left
+}
+
+.calendar-date.holiday, .calendar-name.holiday{
+	color:#42A5F5
+}
+.calendar-name{
+	float: right
 }

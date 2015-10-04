@@ -29,14 +29,22 @@ angular.module('starter.services', [])
 
       }
     };
-      // return $http({
-      //     method: 'GET',
-      //     url: 'http://api.openweathermap.org/data/2.5/weather?q=hongkong&lang=zh_tw&units=metric',
-      // }).success(function(data) {
-      //   return data
-      // }).error(function(data) {
-      //   return data
-      // });
-       
-    })
+  })
+
+  .factory('TodayData', function () {
+    var schoolday = "";
+
+    var update = function (schoolday) {
+      this.schoolday = schoolday;
+    };
+
+    var getSchoolday = function () {
+      return this.schoolday;
+    };
+
+    return {
+      update: update,
+      getSchoolday: getSchoolday
+    };
+  })
   

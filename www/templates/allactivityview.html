@@ -1,0 +1,9 @@
+<ion-view view-title="所有活動和事項">
+
+  <ion-content>
+      <ion-item ng-repeat="holiday in holiday">
+        <span class="calendar-date">{{holiday.date}}</span>
+        <span class="calendar-name">{{holiday.name}}</span>
+      </ion-item>
+  </ion-content>
+</ion-view>

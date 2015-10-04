@@ -46,69 +46,74 @@
     <div class="list card" ng-show="schooldayboolean" style="border-color:#26A69A">
       <div class="item item-divider">今日課表<i class="title-icon icon ion-ios-calendar-outline" style="color:#26A69A"></i></div>
       <div class="item item-body" style="padding:0 0 0 0;">
-        <div>
-          <a href="#/tab/account"><div class="setting-instruction" ng-show="displayinstruction">請先去設置里設置班級</div></a>
-          <div class="row" style="text-align:center;width:200px;margin:10px auto;">
-            <div class="col" style="border:1px solid #26A69A">班級</div>
-            <div class="col" style="font-weight:200;background-color:#26A69A;color:#fff">{{grade}}{{class}}</div>
-          </div>
-          <table style="width:100%;text-align:center">
-            <tr>
-              <th colspan="2">早會</th>
-            </tr>
-            <tr>
-              <td>8:30-9:10</td>
-              <td>{{todayScheduleData.one}}</td>
-            </tr>
-            <tr>
-              <td>9:10-9:50</td>
-              <td>{{todayScheduleData.two}}</td>
-            </tr>
-            <tr>
-              <th colspan="2">小息</th>
-            </tr>
-            <tr>
-              <td>10:05-10:45</td>
-              <td>{{todayScheduleData.three}}</td>
-            </tr>
-            <tr>
-              <td>10:45-11:25</td>
-              <td>{{todayScheduleData.four}}</td>
-            </tr>
-            <tr>
-              <th colspan="2">小息</th>
-            </tr>
-            <tr>
-              <td>11:40-12:20</td>
-              <td>{{todayScheduleData.five}}</td>
-            </tr>
-            <tr>
-              <td>12:20-13:00</td>
-              <td>{{todayScheduleData.six}}</td>
-            </tr>
-            <tr>
-              <th colspan="2">午膳</th>
-            </tr>
-            <tr>
-              <td>14:00-14:40</td>
-              <td>{{todayScheduleData.seven}}</td>
-            </tr>
-            <tr>
-              <td>14:40-15:20</td>
-              <td>{{todayScheduleData.eight}}</td>
-            </tr>
-            <tr>
-              <td>15:20-16:00</td>
-              <td>{{todayScheduleData.nine}}</td>
-            </tr>
-            <tr>
-              <th colspan="2">放學</th>
-            </tr>
 
-          </table>
-          <a href="#/tab/dash/fullscheduleview">
-            <div class="gotoschedule-button">查看所有課表&nbsp;</div>
-          </a>
+        <a href="#/tab/account">
+          <div class="setting-instruction" ng-show="displayinstruction">請先去設置里設置班級</div>
+        </a>
+        <div ng-show="!displayinstruction">
+          <div>
+            <div class="row" style="text-align:center;width:200px;margin:10px auto;">
+              <div class="col" style="border:1px solid #26A69A">班級</div>
+              <div class="col" style="font-weight:200;background-color:#26A69A;color:#fff">{{grade}}{{class}}</div>
+            </div>
+            <table style="width:100%;text-align:center">
+              <tr>
+                <th colspan="2">早會</th>
+              </tr>
+              <tr>
+                <td>8:30-9:10</td>
+                <td>{{todayScheduleData.one}}</td>
+              </tr>
+              <tr>
+                <td>9:10-9:50</td>
+                <td>{{todayScheduleData.two}}</td>
+              </tr>
+              <tr>
+                <th colspan="2">小息</th>
+              </tr>
+              <tr>
+                <td>10:05-10:45</td>
+                <td>{{todayScheduleData.three}}</td>
+              </tr>
+              <tr>
+                <td>10:45-11:25</td>
+                <td>{{todayScheduleData.four}}</td>
+              </tr>
+              <tr>
+                <th colspan="2">小息</th>
+              </tr>
+              <tr>
+                <td>11:40-12:20</td>
+                <td>{{todayScheduleData.five}}</td>
+              </tr>
+              <tr>
+                <td>12:20-13:00</td>
+                <td>{{todayScheduleData.six}}</td>
+              </tr>
+              <tr>
+                <th colspan="2">午膳</th>
+              </tr>
+              <tr>
+                <td>14:00-14:40</td>
+                <td>{{todayScheduleData.seven}}</td>
+              </tr>
+              <tr>
+                <td>14:40-15:20</td>
+                <td>{{todayScheduleData.eight}}</td>
+              </tr>
+              <tr>
+                <td>15:20-16:00</td>
+                <td>{{todayScheduleData.nine}}</td>
+              </tr>
+              <tr>
+                <th colspan="2">放學</th>
+              </tr>
+
+            </table>
+            <a href="#/tab/dash/fullscheduleview">
+              <div class="gotoschedule-button">查看所有課表&nbsp;</div>
+            </a>
+          </div>
 
         </div>
       </div>
@@ -120,7 +125,7 @@
 
         <div class="row" style="text-align:center;">
           <div class="col" style="background-color:#42A5F5;color:#fff;border:1px solid #42A5F5">{{weekdayinthreedays[0]}}&nbsp;<i class="icon ion-star" style="color:#fff"></i></div>
-          <div class="col">{{weekdayinthreedays[1]}}</div>
+          <div class="col" style="border: 1px solid #42A5F5">{{weekdayinthreedays[1]}}</div>
         </div>
 
         <div style="padding:5px;margin-top:10px" ng-show="holiday">
@@ -130,7 +135,7 @@
           明天是上課日：<b>{{schooldayfortomorrow}}</b>
         </p>
         <a href="#/tab/dash/fullscheduleview">
-          <div class="gotoschedule-button-blue">查看所有課表&nbsp;<i class="icon ion-arrow-right-c"></i></div>
+          <div class="gotoschedule-button-blue">查看所有課表</div>
         </a>
       </div>
     </div>
@@ -140,7 +145,7 @@
     <div class="list card" style="border-color:#5C6BC0">
       <div class="item item-divider">今日天氣<i class="title-icon icon ion-ios-cloud-outline" style="color:#5C6BC0"></i></div>
       <div class="item item-body" style="padding-bottom:30px;text-align:center;">
-        <div style="color:#5C6BC0;font-size:18px;background-color:#5C6BC0;color:#fff;padding:10px 15px;">
+        <div style="color:#5C6BC0;font-size:18px;font-weight:500;border-bottom:1px solid #5C6BC0;;padding:10px 15px;">
           {{weatherdescription}}
         </div>
         <p>
