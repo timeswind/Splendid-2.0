@@ -38,7 +38,7 @@ a{
 	text-align: center
 }
 .item-radio .item-content{
-padding: 10px 0;	
+padding: 15px 0;	
 }
 .item-radio.radio-icon{
 display: none;
@@ -49,15 +49,35 @@ display: none;
 }
 
 .item-radio input:checked ~ .item-content{
-	padding:3px 0;
+
 	border-radius: 0px;
-	background: transparent;
-	border-bottom:2px solid #26A69A;
+	color: #fff;
+	background: #26A69A;
+	
 }
 
 .calendar-date{
-	float: left
+	float: left;
+	margin-top: 5px;
+}
+
+.calendar-date.holiday, .calendar-name.holiday{
+	color:#42A5F5
 }
 .calendar-name{
 	float: right
+}
+
+.calendar-date.activity, .calendar-name.activity{
+	color:#FF7043;
+}
+
+.ion-item-calendar{
+	padding-bottom:5px;
+}
+
+.ion-item-calendar .countdown{
+	font-size: 11px;
+    color:#444;
+	float: right;
 }

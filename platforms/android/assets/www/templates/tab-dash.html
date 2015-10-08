@@ -3,7 +3,16 @@
     <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()">
     </ion-refresher>
 
-    <div class="list card" ng-show="schooldayboolean" style="border-color:#EF5350;">
+    <div class="list card" ng-if="dseboolean" style="border-color:#FFC107;">
+      <div class="item item-divider">距離DSE還有<i class="title-icon icon ion-ios-glasses-outline" style="color:#FFC107"></i></div>
+      <div class="item item-body">
+        <div>
+          <p style="font-size:30px;padding:10px 0 15px 0;text-align:center;margin:0;color:#FFC107">{{dse}}天</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="list card" ng-if="schooldayboolean" style="border-color:#EF5350;">
       <div class="item item-divider">上課日<i class="title-icon icon ion-ios-book-outline" style="color:#EF5350"></i></div>
       <div class="item item-body">
         <div>
@@ -20,7 +29,7 @@
       </div>
     </div>
 
-    <div class="list card" ng-show="schoolactivityboolean" style="border-color:#FF7043">
+    <div class="list card" ng-if="schoolactivityboolean" style="border-color:#FF7043">
       <div class="item item-divider">校內活動/事項<i class="title-icon icon ion-ios-basketball-outline" style="color:#FF7043"></i></div>
       <div class="item item-body">
         <div>
@@ -28,14 +37,14 @@
         </div>
         </br>
         <b style="color:#FF7043">{{activity}}</b>
-        <p ng-show="schoolactivityfortomorrowboolean">
+        <p ng-if="schoolactivityfortomorrowboolean">
           明日活動/事項：<b style="color:#FF8A65">{{activityfortomorrow}}</b>
         </p>
 
       </div>
     </div>
 
-    <div class="list card" ng-show="!schoolactivityboolean && schoolactivityfortomorrowboolean" style="border-color:#FF7043">
+    <div class="list card" ng-if="!schoolactivityboolean && schoolactivityfortomorrowboolean" style="border-color:#FF7043">
       <div class="item item-divider">明日校內活動/事項<i class="title-icon icon ion-ios-basketball-outline" style="color:#FF7043"></i></div>
       <div class="item item-body">
         <div>
@@ -43,14 +52,14 @@
         </div>
       </div>
     </div>
-    <div class="list card" ng-show="schooldayboolean" style="border-color:#26A69A">
+    <div class="list card" ng-if="schooldayboolean" style="border-color:#26A69A">
       <div class="item item-divider">今日課表<i class="title-icon icon ion-ios-calendar-outline" style="color:#26A69A"></i></div>
       <div class="item item-body" style="padding:0 0 0 0;">
 
         <a href="#/tab/account">
-          <div class="setting-instruction" ng-show="displayinstruction">請先去設置里設置班級</div>
+          <div class="setting-instruction" ng-if="displayinstruction">請先去設置里設置班級</div>
         </a>
-        <div ng-show="!displayinstruction">
+        <div ng-if="!displayinstruction">
           <div>
             <div class="row" style="text-align:center;width:200px;margin:10px auto;">
               <div class="col" style="border:1px solid #26A69A">班級</div>
@@ -128,10 +137,10 @@
           <div class="col" style="border: 1px solid #42A5F5">{{weekdayinthreedays[1]}}</div>
         </div>
 
-        <div style="padding:5px;margin-top:10px" ng-show="holiday">
+        <div style="padding:5px;margin-top:10px" ng-if="holiday">
           今天是假期&nbsp;<b style="color:#42A5F5;">{{holiday}}</b>
         </div>
-        <p ng-show="schooldayfortomorrowboolean" style="padding:5px;margin-top:5px;">
+        <p ng-if="schooldayfortomorrowboolean" style="padding:5px;margin-top:5px;">
           明天是上課日：<b>{{schooldayfortomorrow}}</b>
         </p>
         <a href="#/tab/dash/fullscheduleview">

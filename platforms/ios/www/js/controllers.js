@@ -1,7 +1,7 @@
 /* global angular */
 angular.module('starter.controllers', [])
 
-  .controller('DashCtrl', function ($scope, $filter, $http, $state, WeatherData, GetSchedule, TodayData) {
+  .controller('DashCtrl', function ($scope, $filter, $http, $state, GetSchedule, TodayData, DateDifference) {
     var weekdayarray = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"];
     var weekdayinthreedays = [];
     var montharray = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
@@ -27,9 +27,20 @@ angular.module('starter.controllers', [])
     //进入View
     $scope.$on('$ionicView.enter', function () {
       var today = new Date();
+      var dseDate = new Date("03/30/2016");
       weekdayinthreedays = [];
       var weekday = weekdayarray[today.getDay()];
       var month = montharray[today.getMonth()];
+
+
+      if (window.localStorage['dse']) {
+        if (window.localStorage['dse'] == "true") {
+          $scope.dseboolean = true
+          $scope.dse = DateDifference.daysBetween(today, dseDate)
+        } else {
+          $scope.dseboolean = false
+        }
+      }
       
       //检查课程表设置
       checkScheduleSettings()
@@ -46,14 +57,21 @@ angular.module('starter.controllers', [])
 
       
       //天气
-      WeatherData.all().then(function (data) {
-        $scope.weatherdescription = data.data.weather[0]["description"];
-        $scope.temperature = data.data.main.temp;
-        $scope.maxtemperature = data.data.main.temp_max;
-        $scope.mintemperature = data.data.main.temp_min;
-        $scope.humidity = data.data.main.humidity;
+      $http({
+        method: 'GET',
+        url: 'http://api.openweathermap.org/data/2.5/weather?q=hongkong&lang=zh_tw&units=metric',
+      }).success(function (data) {
 
+        $scope.weatherdescription = data.weather[0]["description"];
+        $scope.temperature = data.main.temp;
+        $scope.maxtemperature = data.main.temp_max;
+        $scope.mintemperature = data.main.temp_min;
+        $scope.humidity = data.main.humidity;
+
+      }).error(function (data) {
+        console.log("!!Get Weather Data Failed!!")
       });
+
       
       //显示活动，假期，课程表
       setCalender();
@@ -136,7 +154,6 @@ angular.module('starter.controllers', [])
         if (schoolday !== "") {
           $scope.schooldayboolean = true;
           $scope.schoolday = "Day" + " " + schoolday;
-          $scope.$apply();
           getSchedule(schoolday);
         } else if (holiday !== "") {
           $scope.schooldayboolean = false;
@@ -155,7 +172,6 @@ angular.module('starter.controllers', [])
         if (schooldayfortomorrow !== "") {
           $scope.schooldayfortomorrowboolean = true;
           $scope.schooldayfortomorrow = "Day" + " " + schooldayfortomorrow;
-          $scope.$apply();
         } else if (holidayfortomorrow !== "") {
           $scope.schooldayfortomorrowboolean = false;
           $scope.holidayfortomorrow = holidayfortomorrow;
@@ -191,6 +207,47 @@ angular.module('starter.controllers', [])
 
 
   .controller('AccountCtrl', function ($scope, $rootScope) {
+
+    if (window.localStorage['dse']) {
+      if (window.localStorage['dse'] == "true") {
+        $scope.settings = {
+          dse: true
+        }
+      } else {
+        $scope.settings = {
+          dse: false
+        }
+      }
+    } else {
+      window.localStorage['dse'] = "true"
+      $scope.settings = {
+        dse: true
+      }
+    }
+
+    $scope.setDSE = function () {
+
+      if (window.localStorage['dse']) {
+        if (window.localStorage['dse'] == "true") {
+          window.localStorage['dse'] = "false";
+          $scope.settings = {
+            dse: false
+          }
+        } else if (window.localStorage['dse'] == 'false') {
+          window.localStorage['dse'] = 'true';
+          $scope.settings = {
+            dse: true
+          }
+        }
+      } else {
+        window.localStorage['dse'] = 'true';
+        $scope.settings = {
+          dse: true
+        }
+      }
+    }
+
+
     $scope.data = {
       classSelect: window.localStorage['class'],
       gradeSelect: window.localStorage['grade'],
@@ -225,6 +282,7 @@ angular.module('starter.controllers', [])
     var thegrade;
     var theclass;
     var schoolday = TodayData.getSchoolday();
+    var chineseGrade = ["零", "一", "二", "三", "四", "五", "六"]
 
     $scope.schoolday = schoolday;
 
@@ -249,7 +307,7 @@ angular.module('starter.controllers', [])
 
     if (window.localStorage['grade']) {
       thegrade = window.localStorage['grade'];
-      $scope.grade = thegrade;
+      $scope.grade = chineseGrade[thegrade];
       if (window.localStorage['class']) {
         theclass = window.localStorage['class'];
         $scope.class = theclass;
@@ -271,9 +329,11 @@ angular.module('starter.controllers', [])
       if (window.localStorage['grade']) {
         thegrade = window.localStorage['grade'];
         $scope.grade = thegrade;
+        $scope.grade = chineseGrade[thegrade];
         if (window.localStorage['class']) {
           theclass = window.localStorage['class'];
           $scope.class = theclass;
+          getSchedule($scope.data.dayselect)
           if ($scope.schooldayboolean) {
             $scope.displayinstruction = false;
           }
@@ -296,16 +356,11 @@ angular.module('starter.controllers', [])
 
   })
 
-  .controller('CalendarCtrl', function ($scope, $http, $filter) {
+  .controller('CalendarCtrl', function ($scope, $http, $filter, DateDifference) {
 
-    $scope.holiday = {
-      date: []
-    }
-    var today = new Date();
-    // var todayFormated = $filter('date')(today, 'dd/MM/yyyy');
     var holidayArray = [];
     var activityArray = [];
-
+    var today = new Date();
     var start = new Date();
     var end = new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000);
 
@@ -316,12 +371,12 @@ angular.module('starter.controllers', [])
         var activityName = eval(data.data[$filter('date')(start, 'dd/MM/yyyy')])["activity"];
         var dateFormate = $filter('date')(start, 'MM月dd日')
         if (holidayName) {
-          holidayArray.push({ date: dateFormate, name: holidayName });
+          holidayArray.push({ date: dateFormate, name: holidayName, countdown: DateDifference.daysBetween(today, start) });
 
         }
 
         if (activityName) {
-          activityArray.push({ date: dateFormate, name: activityName });
+          activityArray.push({ date: dateFormate, name: activityName, countdown: DateDifference.daysBetween(today, start) });
 
         }
         var newDate = start.setDate(start.getDate() + 1);
@@ -332,5 +387,46 @@ angular.module('starter.controllers', [])
       $scope.activity = activityArray
 
     });
+  })
+  .controller('AllCalendarCtrl', function ($scope, $stateParams, $http, $filter, DateDifference) {
+        $scope.holidayCalendar = false;
+    if ($stateParams.EventType) {
+      if ($stateParams.EventType == "holiday") {
+        $scope.title = "所有假期";
+        $scope.holidayCalendar = true;
+        pushEvents("holiday");
+      } else if ($stateParams.EventType == "activity") {
+        $scope.title = "所有活動和事項";
+        $scope.holidayCalendar = false;
+        pushEvents("activity");
+      }
+    }
+
+    var eventArray = [];
+
+    var today = new Date();
+    var start = new Date();
+    var end = new Date("07/31/2016");
+
+    function pushEvents(EventType) {
+      $http.get('calender.json').then(function (data) {
+
+        while (start < end) {
+          var eventName = eval(data.data[$filter('date')(start, 'dd/MM/yyyy')])[EventType];
+
+          var dateFormate = $filter('date')(start, 'MM月dd日')
+          if (eventName) {
+            eventArray.push({ date: dateFormate, name: eventName, countdown: DateDifference.daysBetween(today, start) });
+
+          }
+          var newDate = start.setDate(start.getDate() + 1);
+          start = new Date(newDate);
+        }
+
+        $scope.events = eventArray
+
+      });
+    }
+
   });
   

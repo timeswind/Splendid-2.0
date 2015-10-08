@@ -55,6 +55,16 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ionic.service.push', 
           }
         }
       })
+      .state('tab.fullscheduleview', {
+        url: '/dash/fullscheduleview',
+        views: {
+          'tab-dash': {
+            templateUrl: 'templates/fullscheduleview.html',
+            controller: 'FullScheduleCtrl'
+          }
+        }
+
+      })
 
       .state('tab.account', {
         url: '/account',
@@ -74,19 +84,16 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ionic.service.push', 
           }
         }
       })
-
-      .state('tab.fullscheduleview', {
-        url: '/dash/fullscheduleview',
+      .state('tab.allcalendarview', {
+        url: '/calendar/allcalendarview/:EventType',
         views: {
-          'tab-dash': {
-            templateUrl: 'templates/fullscheduleview.html',
-            controller: 'FullScheduleCtrl'
+          'tab-calendar': {
+            templateUrl: 'templates/allcalendarview.html',
+            controller: 'AllCalendarCtrl'
           }
         }
-        // templateUrl: 'templates/fullscheduleview.html',
-        // controller: 'FullScheduleCtrl'
-
       });
+
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tab/dash');

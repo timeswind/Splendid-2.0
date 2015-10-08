@@ -84,22 +84,12 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'ionic.service.push', 
           }
         }
       })
-
-      .state('tab.allholidayview', {
-        url: '/calendar/allholidayview',
+      .state('tab.allcalendarview', {
+        url: '/calendar/allcalendarview/:EventType',
         views: {
           'tab-calendar': {
-            templateUrl: 'templates/allholidayview.html',
-            controller: 'AllHolidayCtrl'
-          }
-        }
-      })
-      .state('tab.allactivityview', {
-        url: '/calendar/allactivityview',
-        views: {
-          'tab-calendar': {
-            templateUrl: 'templates/allactivityview.html',
-            controller: 'AllActivityCtrl'
+            templateUrl: 'templates/allcalendarview.html',
+            controller: 'AllCalendarCtrl'
           }
         }
       });

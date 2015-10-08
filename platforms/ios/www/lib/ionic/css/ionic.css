@@ -3198,7 +3198,6 @@ a.subdued {
     .bar .button.button-clear {
       padding-right: 2px;
       padding-left: 2px;
-      font-weight: 300;
       font-size: 17px; }
       .bar .button.button-clear .icon:before, .bar .button.button-clear.icon:before, .bar .button.button-clear.icon-left:before, .bar .button.button-clear.icon-right:before {
         font-size: 32px;
@@ -5371,7 +5370,7 @@ a.item-content {
   margin-left: 0;
   margin-right: 0; }
 
-.card .item:first-child, .list-inset .item:first-child, .padding > .list .item:first-child {
+/*.card .item:first-child, .list-inset .item:first-child, .padding > .list .item:first-child {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px; }
   .card .item:first-child .item-content, .list-inset .item:first-child .item-content, .padding > .list .item:first-child .item-content {
@@ -5382,7 +5381,7 @@ a.item-content {
   border-bottom-left-radius: 2px; }
   .card .item:last-child .item-content, .list-inset .item:last-child .item-content, .padding > .list .item:last-child .item-content {
     border-bottom-right-radius: 2px;
-    border-bottom-left-radius: 2px; }
+    border-bottom-left-radius: 2px; }*/
 
 .card .item:last-child, .list-inset .item:last-child {
   margin-bottom: -1px; }
@@ -6292,10 +6291,10 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
     
      .item-radio input:checked + .radio-content .item-content {
     /* style the item content when its checked */
-	padding:3px 0;
-	border-radius: 0px;
-	background: transparent;
-	border-bottom:2px solid #26A69A;
+
+	color: #fff;
+	background: #26A69A;
+
     
   }
     
@@ -6591,7 +6590,6 @@ progress {
   min-height: 47px;
   border-width: 1px;
   border-style: solid;
-  border-radius: 2px;
   vertical-align: top;
   text-align: center;
   text-overflow: ellipsis;
@@ -6922,11 +6920,20 @@ progress {
   border-color: transparent;
   background: none;
   box-shadow: none; }
+  
+
+  
   .button-clear.button-clear {
     border-color: transparent;
     background: none;
     box-shadow: none;
     color: #00BCD4; }
+    
+  .platform-android .button-clear.button-clear {
+    border-color: transparent;
+    background: none;
+    box-shadow: none;
+    color: #fff; }
 
   .button-clear.button-icon {
     border-color: transparent;

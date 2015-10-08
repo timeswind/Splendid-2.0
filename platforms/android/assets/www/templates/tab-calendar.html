@@ -2,20 +2,24 @@
   <ion-content>
     <ion-list>
       <div style="padding:15px 0 8px 10px;color:#444">30日內假期</div>
-      <ion-item ng-repeat="holiday in holiday">
+      <ion-item ng-repeat="holiday in holiday" class="ion-item-calendar">
         <span class="calendar-date holiday">{{holiday.date}}</span>
         <span class="calendar-name holiday">{{holiday.name}}</span>
+        <br>
+        <span class="countdown">距离{{holiday.countdown}}天</span>
       </ion-item>
       <ion-item style="text-align:center">
-        <a style="color:#00BCD4" href="#/tab/calendar/allholidayview">查看所有假期</a>
+        <a style="color:#00BCD4" href="#/tab/calendar/allcalendarview/holiday">查看所有假期</a>
       </ion-item>
+      
       <div style="padding:15px 0 8px 10px;color:#444">30日內活動及事項</div>
-      <ion-item ng-repeat="activity in activity">
-        <span class="calendar-date">{{activity.date}}</span>
-        <span class="calendar-name">{{activity.name}}</span>
+      <ion-item ng-repeat="activity in activity" class="ion-item-calendar">
+        <span class="calendar-date activity">{{activity.date}}</span>
+        <span class="calendar-name activity">{{activity.name}}</span><br>
+        <span class="countdown">距离{{activity.countdown}}天</span>
       </ion-item>
       <ion-item style="text-align:center">
-        <a style="color:#00BCD4" href="#/tab/calendar/allactivityview">查看所有活動和事項</a>
+        <a style="color:#00BCD4" href="#/tab/calendar/allcalendarview/activity">查看所有活動和事項</a>
       </ion-item>
     </ion-list>
   </ion-content>

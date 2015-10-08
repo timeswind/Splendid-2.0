@@ -1,23 +1,30 @@
 <ion-view view-title="課表">
-
+    <ion-nav-buttons side="right" ng-show="!displayinstruction">
+      <a class="button button-clear" href="#/tab/account">
+        中{{grade}}&nbsp;{{class}}班&nbsp;
+      </a>
+    </ion-nav-buttons>
   <ion-content>
     <div class="list card" style="border-color:#26A69A">
-      <div class="item item-divider">課表<i class="title-icon icon ion-ios-calendar-outline" style="color:#26A69A"></i></div>
       <div class="item item-body" style="padding:0 0 0 0;">
         <div>
           <!--<p> 今天是：Day {{schoolday}}</p>-->
           <a href="#/tab/account">
             <div class="setting-instruction" ng-show="displayinstruction">請先去設置里設置班級</div>
           </a>
+
           <ion-radio-fix ng-repeat="item in dayselect" ng-value="item.value" ng-model="data.dayselect" ng-click="getSchedule(item.value)"
           ng-show="!displayinstruction">
             {{ item.value }}
           </ion-radio-fix>
 
-          <div class="row" style="text-align:center;width:200px;margin:10px auto;margin-top:20px;">
+          <br>
+
+
+          <!--<div class="row" style="text-align:center;width:200px;margin:10px auto;margin-top:20px;">
             <div class="col" style="border:1px solid #26A69A">班級</div>
             <div class="col" style="font-weight:200;background-color:#26A69A;color:#fff">{{grade}}{{class}}</div>
-          </div>
+          </div>-->
           <table style="width:100%;text-align:center">
             <tr>
               <th colspan="2">早會</th>
