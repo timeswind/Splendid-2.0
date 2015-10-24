@@ -8,9 +8,9 @@
         <br>
         <span class="countdown">距离{{holiday.countdown}}天</span>
       </ion-item>
-      <ion-item style="text-align:center">
-        <a style="color:#00BCD4" href="#/tab/calendar/allcalendarview/holiday">查看所有假期</a>
-      </ion-item>
+      <a href="#/tab/calendar/allcalendarview/holiday"><ion-item style="text-align:center">
+        <span style="color:#00BCD4">查看所有假期</span>
+      </ion-item></a>
       
       <div style="padding:15px 0 8px 10px;color:#444">30日內活動及事項</div>
       <ion-item ng-repeat="activity in activity" class="ion-item-calendar">
@@ -18,9 +18,9 @@
         <span class="calendar-name activity">{{activity.name}}</span><br>
         <span class="countdown">距离{{activity.countdown}}天</span>
       </ion-item>
-      <ion-item style="text-align:center">
-        <a style="color:#00BCD4" href="#/tab/calendar/allcalendarview/activity">查看所有活動和事項</a>
-      </ion-item>
+      <a href="#/tab/calendar/allcalendarview/activity"><ion-item style="text-align:center">
+        <span style="color:#00BCD4">查看所有活動和事項</span>
+      </ion-item></a>
     </ion-list>
   </ion-content>
 </ion-view>

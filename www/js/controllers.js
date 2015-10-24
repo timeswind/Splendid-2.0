@@ -27,25 +27,28 @@ angular.module('starter.controllers', [])
     //进入View
     $scope.$on('$ionicView.enter', function () {
       var today = new Date();
-      var dseDate = new Date("03/30/2016");
       weekdayinthreedays = [];
+
       var weekday = weekdayarray[today.getDay()];
       var month = montharray[today.getMonth()];
 
-
+      //DSE倒计时计算
       if (window.localStorage['dse']) {
         if (window.localStorage['dse'] == "true") {
+          var dseDate = new Date("03/30/2016");
           $scope.dseboolean = true
           $scope.dse = DateDifference.daysBetween(today, dseDate)
         } else {
           $scope.dseboolean = false
         }
+      } else {
+        $scope.dseboolean = false;
       }
       
       //检查课程表设置
       checkScheduleSettings()
       
-      //今天 
+      //标题显示今天 
       $scope.today = weekday + " " + month + today.getDate() + "日"
 
       //未来两天
@@ -57,25 +60,37 @@ angular.module('starter.controllers', [])
 
       
       //天气
-      $http({
-        method: 'GET',
-        url: 'http://api.openweathermap.org/data/2.5/weather?q=hongkong&lang=zh_tw&units=metric',
-      }).success(function (data) {
+      if (window.localStorage['weather']) {
+        if (window.localStorage['weather'] == "true") {
+          $http({
+            method: 'GET',
+            url: 'https://api.heweather.com/x3/weather?cityid=CN101320101&key=3b73af05dcba475c9318e6adb024a480',
+          }).success(function (data) {
 
-        $scope.weatherdescription = data.weather[0]["description"];
-        $scope.temperature = data.main.temp;
-        $scope.maxtemperature = data.main.temp_max;
-        $scope.mintemperature = data.main.temp_min;
-        $scope.humidity = data.main.humidity;
+            $scope.weatherdescription = $scope.temperature = data["HeWeather data service 3.0"][0]["now"]["cond"]["txt"];
+            console.log(data["HeWeather data service 3.0"][0])
+            $scope.temperature = data["HeWeather data service 3.0"][0]["now"]["tmp"];
+            $scope.maxtemperature = data["HeWeather data service 3.0"][0]["daily_forecast"][0]["tmp"]["max"];
+            $scope.mintemperature = data["HeWeather data service 3.0"][0]["daily_forecast"][0]["tmp"]["min"];
+                        $scope.weathersuggestion = data["HeWeather data service 3.0"][0]["suggestion"]["comf"]["txt"];
+            // $scope.humidity = data.main.humidity;
 
-      }).error(function (data) {
-        console.log("!!Get Weather Data Failed!!")
-      });
+          }).error(function (data) {
+            console.log("!!Get Weather Data Failed!!")
+          });
+          $scope.weatherboolean = true
+
+        } else {
+          $scope.weatherboolean = false
+        }
+      } else {
+        $scope.weatherboolean = false;
+      }
+
 
       
       //显示活动，假期，课程表
       setCalender();
-
       $scope.$broadcast('scroll.refreshComplete');
 
 
@@ -178,7 +193,7 @@ angular.module('starter.controllers', [])
           $scope.schooldayfortomorrow = "假期"
         } else {
           $scope.schooldayfortomorrowboolean = false;
-          $scope.schooldayfortomorrow = "空"
+          $scope.schooldayfortomorrow = "無"
         }
 
         if (activityfortomorrow !== "") {
@@ -208,44 +223,57 @@ angular.module('starter.controllers', [])
 
   .controller('AccountCtrl', function ($scope, $rootScope) {
 
+    $scope.settings = {
+      dse: null,
+      weather: null
+    }
+
     if (window.localStorage['dse']) {
       if (window.localStorage['dse'] == "true") {
-        $scope.settings = {
-          dse: true
-        }
+        $scope.settings.dse = true;
       } else {
-        $scope.settings = {
-          dse: false
-        }
+        $scope.settings.dse = false;
       }
     } else {
       window.localStorage['dse'] = "true"
-      $scope.settings = {
-        dse: true
-      }
+      $scope.settings.dse = true;
     }
 
-    $scope.setDSE = function () {
+    if (window.localStorage['weather']) {
+      if (window.localStorage['weather'] == "true") {
+        $scope.settings.weather = true;
+      } else {
+        $scope.settings.weather = false;
+      }
+    } else {
+      window.localStorage['weather'] = "true"
+      $scope.settings.weather = true;
+    }
 
-      if (window.localStorage['dse']) {
-        if (window.localStorage['dse'] == "true") {
-          window.localStorage['dse'] = "false";
-          $scope.settings = {
-            dse: false
-          }
-        } else if (window.localStorage['dse'] == 'false') {
-          window.localStorage['dse'] = 'true';
-          $scope.settings = {
-            dse: true
-          }
+
+
+
+    $scope.set = function (name) {
+
+      var settingDictionary = $scope.settings;
+      var settingArray = Object.keys(settingDictionary)
+      console.log(settingArray.indexOf(name))
+      var index = settingArray.indexOf(name)
+
+      if (window.localStorage[name]) {
+        if (window.localStorage[name] == "true") {
+          window.localStorage[name] = "false";
+          $scope.settings[index] = false;
+        } else if (window.localStorage[name] == 'false') {
+          window.localStorage[name] = 'true';
+          $scope.settings[index] = true;
         }
       } else {
-        window.localStorage['dse'] = 'true';
-        $scope.settings = {
-          dse: true
-        }
+        window.localStorage[name] = 'true';
+        $scope.settings[index] = true;
       }
     }
+
 
 
     $scope.data = {
@@ -389,7 +417,7 @@ angular.module('starter.controllers', [])
     });
   })
   .controller('AllCalendarCtrl', function ($scope, $stateParams, $http, $filter, DateDifference) {
-        $scope.holidayCalendar = false;
+    $scope.holidayCalendar = false;
     if ($stateParams.EventType) {
       if ($stateParams.EventType == "holiday") {
         $scope.title = "所有假期";

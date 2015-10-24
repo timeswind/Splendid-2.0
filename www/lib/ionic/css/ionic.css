@@ -6293,7 +6293,7 @@ input[type="radio"][disabled], input[type="checkbox"][disabled], input[type="rad
     /* style the item content when its checked */
 
 	color: #fff;
-	background: #26A69A;
+	background-color: #00BCD4;
 
     
   }

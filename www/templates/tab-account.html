@@ -1,8 +1,9 @@
 <ion-view view-title="設置">
   <ion-content>
     <ion-list>
-            <div style="padding:15px 0 8px 10px;color:#444">DSE</div>
-      <ion-toggle ng-model="settings.dse" toggle-class="toggle-calm" ng-change="setDSE()">DSE倒計時</ion-toggle>
+      <div style="padding:15px 0 8px 10px;color:#444">設置</div>
+      <ion-toggle ng-model="settings.weather" toggle-class="toggle-calm" ng-change="set('weather')">顯示天氣</ion-toggle>
+      <ion-toggle ng-model="settings.dse" toggle-class="toggle-calm" ng-change="set('dse')">DSE倒計時</ion-toggle>
       <div style="padding:15px 0 8px 10px;color:#444">課程表</div>
       <label class="item item-input item-select">
         <div class="input-label">
@@ -28,16 +29,11 @@
       <a class="item">
     版本
     <span class="item-note ">
-      2.1.1
+      2.1.9
     </span>
   </a>
-      <a class="item"> 聯繫作者
-      <span class="item-note">
-      tswymt@gmail.com
-    </span>
-      </a>
-
     </ion-list>
+
     <!--<div style="width:80px;margin:0 auto;margin-top:30px; "><img src="img/splendid-s.png " style="width:100px; " /></div>-->
   </ion-content>
 </ion-view>

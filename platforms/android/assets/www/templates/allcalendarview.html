@@ -1,7 +1,7 @@
 <ion-view view-title="{{title}}">
   <ion-content>
-       <ion-item style="text-align:center" ng-if="holidayCalendar">
-        <a style="color:#00BCD4;font-size:18px">假期還剩<br><br><b>{{events.length}}天</b></a>
+       <ion-item style="text-align:center;margin-top:10px;" ng-if="holidayCalendar">
+        <a style="color:#00BCD4;font-size:18px;">該學年假期還剩<b>{{events.length}}天</b></a>
       </ion-item>
       <ion-item ng-repeat="event in events" class="ion-item-calendar">
         <span class="calendar-date">{{event.date}}</span>

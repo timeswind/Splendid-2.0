@@ -151,10 +151,10 @@
 
 
 
-    <div class="list card" style="border-color:#5C6BC0">
+    <div class="list card" style="border-color:#5C6BC0" ng-if="weatherboolean">
       <div class="item item-divider">今日天氣<i class="title-icon icon ion-ios-cloud-outline" style="color:#5C6BC0"></i></div>
       <div class="item item-body" style="padding-bottom:30px;text-align:center;">
-        <div style="color:#5C6BC0;font-size:18px;font-weight:500;border-bottom:1px solid #5C6BC0;;padding:10px 15px;">
+        <div style="color:#5C6BC0;font-size:18px;font-weight:500;border-bottom:1px solid #5C6BC0;padding:10px 15px;">
           {{weatherdescription}}
         </div>
         <p>
@@ -166,7 +166,11 @@
         <p>
           最低氣溫：{{mintemperature}}℃
         </p>
-
+        <div style="color:#5C6BC0;font-size:12px;font-weight:500;border-top:1px solid #5C6BC0;border-bottom:1px solid #5C6BC0;padding:10px 15px;">
+          {{weathersuggestion}}</div>
+        <p style="font-size:11px;color:#5C6BC0">天氣信息由
+          <i style="text-decoration:underline;" onclick="window.open('http://heweather.com', '_system', 'location=yes'); return false;">heweather.com</i>
+          提供，僅供參考</p>
       </div>
     </div>
     <!--<div class="list card" style="border-color:#7E57C2">
