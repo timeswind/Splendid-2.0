@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.splendid.timeswind.splendid" version="2.1.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Splendid</name>
+<widget id="com.ionicframework.splendid20github136374" version="2.1.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>splendid2.0</name>
   <description>
         Splendid 2.0
     </description>

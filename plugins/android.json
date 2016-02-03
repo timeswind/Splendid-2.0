@@ -31,6 +31,10 @@
                         {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" value=\"io.ionic.keyboard.IonicKeyboard\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -60,6 +64,12 @@
             "PACKAGE_NAME": "com.ionicframework.whatstoday483929"
         },
         "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.splendid.timeswind.splendid"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.splendid.timeswind.splendid"
+        },
+        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.splendid.timeswind.splendid"
         }
     },
